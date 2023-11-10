@@ -69,25 +69,6 @@ public abstract class Flow {
     public void setDate(Date date) {
         this.date = date;
     }
-}
 
-class Transfer extends Flow {
-    // Constructor calling the superclass constructor
-    public Transfer(String comment, int identifier, double amount, int targetAccountNumber, boolean effect, Date date) {
-        super(comment, identifier, amount, targetAccountNumber, effect, date);
-    }
-}
-
-class Debit extends Flow {
-    // Constructor calling the superclass constructor
-    public Debit(String comment, int identifier, double amount, int targetAccountNumber, boolean effect, Date date) {
-        super(comment, identifier, amount, targetAccountNumber, effect, date);
-    }
-}
-
-class Credit extends Flow {
-    // Constructor calling the superclass constructor
-    public Credit(String comment, int identifier, double amount, int targetAccountNumber, boolean effect, Date date) {
-        super(comment, identifier, amount, targetAccountNumber, effect, date);
-    }
+   
 }
