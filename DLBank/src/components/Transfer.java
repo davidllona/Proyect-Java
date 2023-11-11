@@ -20,4 +20,10 @@ public class Transfer extends Flow {
     public void setSourceAccountNumber(int sourceAccountNumber) {
         this.sourceAccountNumber = sourceAccountNumber;
     }
+
+    // Implementing the abstract method to update account balance
+    @Override
+    public void updateAccountBalance(Account account) {
+        // Implement the logic for updating balance for a transfer
+    }
 }
