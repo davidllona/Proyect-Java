@@ -70,5 +70,6 @@ public abstract class Flow {
         this.date = date;
     }
 
-   
+    // Abstract method to be implemented by subclasses
+    public abstract void updateAccountBalance(Account account);
 }
