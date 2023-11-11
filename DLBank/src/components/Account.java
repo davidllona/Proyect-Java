@@ -19,28 +19,28 @@ public abstract class Account {
     }
 
     // Accessors (getters)
-    protected String getLabel() {
+    public String getLabel() {
         return label;
     }
 
-    protected double getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    protected int getAccountNumber() {
+    public int getAccountNumber() {
         return accountNumber;
     }
 
-    protected Client getClient() {
+    public Client getClient() {
         return client;
     }
 
     // Mutators (setters)
-    protected void setLabel(String label) {
+    public void setLabel(String label) {
         this.label = label;
     }
 
-    protected void setBalance(double amount, String transactionType) {
+    public void setBalance(double amount, String transactionType) {
         // Modify the balance based on the transaction type
         // Note: This is a placeholder, and you can customize the logic based on your requirements
         if ("transfer".equalsIgnoreCase(transactionType)) {
@@ -70,10 +70,10 @@ public abstract class Account {
     }
 
     // Static variable to automatically increment the account number
-    private static int nextAccountNumber = 1;
+    public static int nextAccountNumber = 1;
 
     // Method to generate the next account number
-    private static int generateAccountNumber() {
+    public static int generateAccountNumber() {
         return nextAccountNumber++;
     }
 }
