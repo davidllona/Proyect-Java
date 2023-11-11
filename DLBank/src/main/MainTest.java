@@ -1,36 +1,68 @@
 package main;
 
-import java.util.Collection;
 
+import components.Account;
 import components.Client;
+import components.CurrentAccount;
+import components.SavingsAccount;
 
-import java.util.Arrays;
+
 
 public class MainTest {
-    public static void main(String[] args) {
-        // Declare an array (Collection) of clients
-        Collection<Client> clients = loadClients(3);
+	public static void main(String[] args) {
+        // Generate a test set of clients
+        Client[] clients = generateTestClients(3);
 
-        // Use a method to display the contents of the table
+        // Display the test set of clients
         displayClients(clients);
+
+        // Load and display the table of accounts
+        Account[] accounts = loadAccounts(clients);
+        displayAccounts(accounts);
     }
 
-    public static Collection<Client> loadClients(int numClients) {
-        return Arrays.asList(
-                createClient("name1", "firstname1"),
-                createClient("name2", "firstname2"),
-                createClient("name3", "firstname3")
-                // Add more clients as needed
-        );
+    private static Client[] generateTestClients(int numberOfClients) {
+        // Create and return an array of test clients
+        Client[] clients = new Client[numberOfClients];
+        for (int i = 0; i < numberOfClients; i++) {
+            clients[i] = new Client("name" + (i + 1), "firstname" + (i + 1));
+        }
+        return clients;
     }
 
-    private static Client createClient(String lastName, String firstName) {
-        return new components.Client(firstName, lastName);
+    private static void displayClients(Client[] clients) {
+        // Display the contents of the array of clients using a stream
+        System.out.println("Test Set of Clients:");
+        for (Client client : clients) {
+            System.out.println(client);
+        }
+        System.out.println();
     }
 
-    public static void displayClients(Collection<Client> clients) {
-        clients.stream()
-                .map(Client::toString)
-                .forEach(System.out::println);
+    private static Account[] loadAccounts(Client[] clients) {
+        // Create a list to store the accounts
+        java.util.List<Account> accountList = new java.util.ArrayList<>();
+
+        // Generate a savings account and a current account per client with zero balances
+        for (Client client : clients) {
+            SavingsAccount savingsAccount = new SavingsAccount("Savings Account", client);
+            CurrentAccount currentAccount = new CurrentAccount("Current Account", client);
+
+            accountList.add(savingsAccount);
+            accountList.add(currentAccount);
+        }
+
+        // Convert the list to an array and return
+        return accountList.toArray(new Account[0]);
+    }
+
+    private static void displayAccounts(Account[] accounts) {
+        // Display the contents of the array of accounts using a stream
+        System.out.println("Table of Accounts:");
+        for (Account account : accounts) {
+            System.out.println(account);
+        }
     }
 }
+
+
