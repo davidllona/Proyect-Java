@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class MainTest {
     public static void main(String[] args) {
@@ -27,9 +29,16 @@ public class MainTest {
         Hashtable<Integer, Account> accountHashtable = loadAccounts(clients);
         displayHashtableInAscendingOrder(accountHashtable);
         
-     // Create and display the array of flows
+        // Create flows
         Flow[] flows = createFlows(accountHashtable);
         displayFlows(flows);
+
+        // Update account balances
+        updateAccountBalances(flows, accountHashtable);
+
+        // Check for negative balances and display results
+        checkAndDisplayNegativeBalances(accountHashtable);
+ 
     }
 
     private static Client[] generateTestClients(int numberOfClients) {
@@ -116,5 +125,35 @@ public class MainTest {
     private static Date convertToDate(LocalDate localDate) {
         // Convert LocalDate to Date
         return java.sql.Date.valueOf(localDate);
+    }
+    
+    private static void updateAccountBalances(Flow[] flows, Hashtable<Integer, Account> accountHashtable) {
+        for (Flow flow : flows) {
+            accountHashtable.computeIfPresent(flow.getTargetAccountNumber(), (key, account) -> {
+                account.updateAccountBalance(flow);
+                return account;
+            });
+
+            if (flow instanceof Transfer) {
+                Transfer transfer = (Transfer) flow;
+                if (accountHashtable.containsKey(transfer.getSourceAccountNumber())) {
+                    accountHashtable.computeIfPresent(transfer.getSourceAccountNumber(), (key, account) -> {
+                        account.updateAccountBalance(flow);
+                        return account;
+                    });
+                }
+            }
+        }
+    }
+
+
+    private static void checkAndDisplayNegativeBalances(Hashtable<Integer, Account> accountHashtable) {
+        Predicate<Account> hasNegativeBalance = account -> account.getBalance() < 0;
+
+        Optional<Account> firstNegativeBalance = accountHashtable.values().stream()
+                .filter(hasNegativeBalance)
+                .findFirst();
+
+        firstNegativeBalance.ifPresent(account -> System.out.println("Account with negative balance: " + account));
     }
 }

@@ -76,4 +76,9 @@ public abstract class Account {
     public static int generateAccountNumber() {
         return nextAccountNumber++;
     }
+
+	public void updateAccountBalance(Flow flow) {
+		// TODO Auto-generated method stub
+		
+	}
 }
