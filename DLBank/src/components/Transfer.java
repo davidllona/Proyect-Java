@@ -10,6 +10,12 @@ public class Transfer extends Flow {
         super(comment, identifier, amount, targetAccountNumber, effect, date);
         this.sourceAccountNumber = sourceAccountNumber;
     }
+    
+    @Override
+    public String toString() {
+        return "Transfer from Account " + sourceAccountNumber + " to Account " + getTargetAccountNumber() + ": " + super.toString();
+    }
+
 
     // Accessor for the additional attribute
     public int getSourceAccountNumber() {
@@ -24,6 +30,7 @@ public class Transfer extends Flow {
     // Implementing the abstract method to update account balance
     @Override
     public void updateAccountBalance(Account account) {
-        // Implement the logic for updating balance for a transfer
+        // Logic to update account balance for a transfer
+        account.setBalance(-getAmount(), "transfer");
     }
 }
