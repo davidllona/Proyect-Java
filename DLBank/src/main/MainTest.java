@@ -133,7 +133,6 @@ public class MainTest {
                 account.updateAccountBalance(flow);
                 return account;
             });
-
             if (flow instanceof Transfer) {
                 Transfer transfer = (Transfer) flow;
                 if (accountHashtable.containsKey(transfer.getSourceAccountNumber())) {
@@ -145,7 +144,6 @@ public class MainTest {
             }
         }
     }
-
 
     private static void checkAndDisplayNegativeBalances(Hashtable<Integer, Account> accountHashtable) {
         Predicate<Account> hasNegativeBalance = account -> account.getBalance() < 0;
